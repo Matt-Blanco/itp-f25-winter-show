@@ -1,4 +1,4 @@
-# Venice Biennale
+# ITP Winter Show 2025
 
-Large visualization installation for the 2025 Venice Biennale
+Time Aquarium visualization for the ITP Winter Show 2025
 
