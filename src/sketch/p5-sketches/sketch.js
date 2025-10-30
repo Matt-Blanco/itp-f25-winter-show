@@ -10,8 +10,15 @@ let bg_col = 0;
 let margin = 100;
 let sub_margin = margin / 3;
 
+let worldData
+
+function preload() {
+  worldData = loadTable('../../data/stuData.csv', 'csv', 'header');
+}
+
 function setup() {
   createCanvas(cw, ch, WEBGL);
+  console.log(worldData)
 }
 
 function draw() {
@@ -37,11 +44,10 @@ function draw() {
   strokeWeight(1);
 
   //make random points at base:
-
-  for (let i = 0; i < 400; i++) {
-    let px = random(-box_w / 2, box_w / 2);
+  for (let i = 0; i < worldData.getRows().length; i++) {
+    let px = map(Number(worldData.getRow(i).obj.world_longitude), 0, 90, -box_w / 2 , box_w / 2 ) //random(-box_w / 2, box_w / 2);
     let py = box_h / 2;
-    let pz = random(random(-box_d, box_d));
+    let pz = map(Number(worldData.getRow(i).obj.world_latitude), -180, 180, box_d / 2, box_d)//random(random(-box_d, box_d));
 
     strokeWeight(0.5);
     stroke(255);
@@ -51,11 +57,11 @@ function draw() {
 
     line(px, py, pz, itp_point, width / 3, itp_point);
 
-    let px3 = random(-box_w / 2, box_w / 2);
-    let py3 = box_h / 2;
-    let pz3 = random(random(-box_d, box_d));
+    // let px3 = random(-box_w / 2, box_w / 2);
+    // let py3 = box_h / 2;
+    // let pz3 = random(random(-box_d, box_d));
 
-    line(itp_point, width / 3, itp_point, px3, py3, pz3);
+    // line(itp_point, width / 3, itp_point, px3, py3, pz3);
   }
 
   pop();
