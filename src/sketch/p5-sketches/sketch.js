@@ -16,6 +16,7 @@ let x, y, z, box_x, box_y, box_z; //declare everything globally.
 
 function setup() {
   createCanvas(cw, ch, WEBGL);
+  background(bg_col);
 }
 
 function draw() {
@@ -35,7 +36,7 @@ function draw() {
   make_cuboid(box_x, box_y, box_z, box_w, box_h, box_d);
 
   //make random points at base:
-  for (let i = 0; i < 400; i++) {
+  for (let i = 0; i < 1; i++) {
     let px = random(-box_w / 2, box_w / 2);
     let py = box_h / 2;
     let pz = random(random(-box_d / 2, box_d / 2));
@@ -48,7 +49,7 @@ function draw() {
 
   pop();
 
-  noLoop(); // static composition
+//   noLoop(); // static composition
 }
 
 function make_cuboid(x, y, z, w, h, d) {
@@ -59,10 +60,10 @@ function make_cuboid(x, y, z, w, h, d) {
   noFill();
   stroke(255);
 
-  //   box(w, h, d);
+//   box(w, h, d);
 }
 
-let st_weight = 0.01;
+let st_weight = 1;
 let st_col = 255;
 
 const itp_point = {
@@ -90,10 +91,11 @@ class Person {
 
     point(this.x, this.y, this.z); //display people as is.
 
-    const reps = 98;
-    let inc = box_h / reps;
+    const reps = 98; //number of times the program runs.
+    const dwell = 8;
+    let inc = box_h / (reps * (reps * dwell));
 
-    const rand_control = 10;
+    const rand_control = 3;
 
     strokeWeight(st_weight);
 
@@ -104,13 +106,15 @@ class Person {
       this.new_y = this.y - inc;
       if (flip) {
         line(this.x, this.y, this.z, itp_point.x, this.new_y, itp_point.z);
+        line(itp_point.x, this.new_y, itp_point.z, itp_point.x, this.new_y - dwell, itp_point.z);
       } else {
         line(itp_point.x, this.y, itp_point.z, this.x, this.new_y, this.z);
+        line(this.x, this.new_y, this.z, this.x, this.new_y - dwell, this.z);
       }
-      this.y = this.new_y;
-      this.x += random(-rand_control, rand_control);
-      this.z += random(-rand_control, rand_control);
-      this.y += random(-10, 10);
+      this.y = this.new_y - dwell;
+        this.x += random(-rand_control, rand_control);
+        this.z += random(-rand_control, rand_control);
+        this.y += random(-rand_control, rand_control);
       flip = !flip;
     }
   }
