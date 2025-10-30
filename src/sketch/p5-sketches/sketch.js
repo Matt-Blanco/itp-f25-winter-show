@@ -38,7 +38,7 @@ function draw() {
   for (let i = 0; i < 400; i++) {
     let px = random(-box_w / 2, box_w / 2);
     let py = box_h / 2;
-    let pz = random(random(-box_d, box_d));
+    let pz = random(random(-box_d/2, box_d/2));
     people.push(new Person(px, py, pz));
   }
 
@@ -78,6 +78,13 @@ function make_cuboid(x, y, z, w, h, d) {
 let st_weight = 0.5;
 let st_col = 255;
 
+const itp_point = {
+  x: box_x + 50,
+  z: box_z + 50,
+};
+
+const inc = 200; 
+
 class Person {
   constructor(x, y, z) {
     this.x = x;
@@ -88,15 +95,18 @@ class Person {
     this.home_y = y;
     this.home_z = z;
 
-    this.ny_x = x;
+    this.ny_x = random(box_x-box_w/2, box_x+box_w/2);
     this.ny_y = y;
-    this.ny_z = y;
+    this.ny_z = random(box_z - box_w / 2, box_z + box_w / 2);
   }
   display() {
     strokeWeight(st_weight);
     stroke(st_col);
 
     point(this.x, this.y, this.z); //display people as is.
+
+    //go to itp:
+    line(this.x, this.y, this.z, itp_point.x, this.y-inc, itp_point.z);
   }
 }
 
