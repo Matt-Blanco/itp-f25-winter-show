@@ -72,7 +72,7 @@ function make_cuboid(x, y, z, w, h, d) {
   noFill();
   stroke(255);
 
-  box(w, h, d);
+//   box(w, h, d);
 }
 
 let st_weight = 0.01;
@@ -82,8 +82,6 @@ const itp_point = {
   x: box_x + 50,
   z: box_z + 50,
 };
-
-const inc = 12;
 
 class Person {
   constructor(x, y, z) {
@@ -100,15 +98,22 @@ class Person {
     this.ny_z = random(-box_d / 2, box_d / 2);
   }
   display() {
-    strokeWeight(st_weight);
+    strokeWeight(st_weight*st_weight);
     stroke(st_col);
 
     point(this.x, this.y, this.z); //display people as is.
 
-    line (this.x, this.y, this.z, itp_point.x, this.y-inc, itp_point.z)
+    const reps = 98;
+    let inc = box_h / reps;
+
+    const rand_control = 10; 
+
+    strokeWeight(st_weight);
+
+    line(this.x, this.y, this.z, itp_point.x, this.y - inc, itp_point.z);
 
     let flip = false;
-    for (let i = 0; i < 120; i++) {
+    for (let i = 0; i < reps; i++) {
       this.new_y = this.y - inc;
       if (flip) {
         line(this.x, this.y, this.z, itp_point.x, this.new_y, itp_point.z);
@@ -116,10 +121,10 @@ class Person {
         line(itp_point.x, this.y, itp_point.z, this.x, this.new_y, this.z);
       }
       this.y = this.new_y;
-      this.y +=random(-5,5); 
-      this.x += random(-10,10); 
-      this.z += random(-10, 10); 
-      flip = !flip; 
+      this.x+=random(-rand_control, rand_control); 
+      this.z += random(-rand_control, rand_control); 
+      this.y+=random(-10,10); 
+      flip = !flip;
     }
 
     // //go to itp:
