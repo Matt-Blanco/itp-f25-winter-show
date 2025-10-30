@@ -126,12 +126,6 @@ class Person {
       this.y+=random(-10,10); 
       flip = !flip;
     }
-
-    // //go to itp:
-    // line(this.x, this.y, this.z, itp_point.x, this.new_y, itp_point.z);
-
-    // //go home:
-    // line(itp_point.x, this.new_y, itp_point.z, this.ny_x, this.new_y - inc, this.ny_z);
   }
 }
 
