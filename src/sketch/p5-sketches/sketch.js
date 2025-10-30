@@ -46,19 +46,6 @@ function draw() {
     person.display();
   }
 
-  //   for (let i = 0; i < 400; i++) {
-
-  //     let itp_point = x + box_w / 2;
-
-  //     line(px, py, pz, itp_point, width / 3, itp_point);
-
-  //     let px3 = random(-box_w / 2, box_w / 2);
-  //     let py3 = 100;
-  //     let pz3 = random(random(-box_d, box_d));
-
-  //     line(itp_point, width / 3, itp_point, px3, py3, pz3);
-  //   }
-
   pop();
 
   noLoop(); // static composition
@@ -72,7 +59,7 @@ function make_cuboid(x, y, z, w, h, d) {
   noFill();
   stroke(255);
 
-//   box(w, h, d);
+  //   box(w, h, d);
 }
 
 let st_weight = 0.01;
@@ -98,7 +85,7 @@ class Person {
     this.ny_z = random(-box_d / 2, box_d / 2);
   }
   display() {
-    strokeWeight(st_weight*st_weight);
+    strokeWeight(st_weight * st_weight);
     stroke(st_col);
 
     point(this.x, this.y, this.z); //display people as is.
@@ -106,7 +93,7 @@ class Person {
     const reps = 98;
     let inc = box_h / reps;
 
-    const rand_control = 10; 
+    const rand_control = 10;
 
     strokeWeight(st_weight);
 
@@ -121,14 +108,15 @@ class Person {
         line(itp_point.x, this.y, itp_point.z, this.x, this.new_y, this.z);
       }
       this.y = this.new_y;
-      this.x+=random(-rand_control, rand_control); 
-      this.z += random(-rand_control, rand_control); 
-      this.y+=random(-10,10); 
+      this.x += random(-rand_control, rand_control);
+      this.z += random(-rand_control, rand_control);
+      this.y += random(-10, 10);
       flip = !flip;
     }
   }
 }
 
 function make_text() {
-  // text("ITP | IMA | LowRes", width/3+sub_margin,
+  fill(255);
+  text("ITP | IMA | LowRes", width / 3 + sub_margin, sub_margin);
 }
