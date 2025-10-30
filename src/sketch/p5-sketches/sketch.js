@@ -38,7 +38,7 @@ function draw() {
   for (let i = 0; i < 400; i++) {
     let px = random(-box_w / 2, box_w / 2);
     let py = box_h / 2;
-    let pz = random(random(-box_d/2, box_d/2));
+    let pz = random(random(-box_d / 2, box_d / 2));
     people.push(new Person(px, py, pz));
   }
 
@@ -66,7 +66,7 @@ function draw() {
 
 function make_cuboid(x, y, z, w, h, d) {
   noFill();
-  strokeWeight(1);
+  strokeWeight(0.2);
   translate(x, y, z);
   rotateY(42);
   noFill();
@@ -75,7 +75,7 @@ function make_cuboid(x, y, z, w, h, d) {
   box(w, h, d);
 }
 
-let st_weight = 0.5;
+let st_weight = 0.01;
 let st_col = 255;
 
 const itp_point = {
@@ -83,7 +83,7 @@ const itp_point = {
   z: box_z + 50,
 };
 
-const inc = 200; 
+const inc = 12;
 
 class Person {
   constructor(x, y, z) {
@@ -95,9 +95,9 @@ class Person {
     this.home_y = y;
     this.home_z = z;
 
-    this.ny_x = random(box_x-box_w/2, box_x+box_w/2);
+    this.ny_x = random(-box_w / 2, box_w / 2);
     this.ny_y = y;
-    this.ny_z = random(box_z - box_w / 2, box_z + box_w / 2);
+    this.ny_z = random(-box_d / 2, box_d / 2);
   }
   display() {
     strokeWeight(st_weight);
@@ -105,8 +105,28 @@ class Person {
 
     point(this.x, this.y, this.z); //display people as is.
 
-    //go to itp:
-    line(this.x, this.y, this.z, itp_point.x, this.y-inc, itp_point.z);
+    line (this.x, this.y, this.z, itp_point.x, this.y-inc, itp_point.z)
+
+    let flip = false;
+    for (let i = 0; i < 120; i++) {
+      this.new_y = this.y - inc;
+      if (flip) {
+        line(this.x, this.y, this.z, itp_point.x, this.new_y, itp_point.z);
+      } else {
+        line(itp_point.x, this.y, itp_point.z, this.x, this.new_y, this.z);
+      }
+      this.y = this.new_y;
+      this.y +=random(-5,5); 
+      this.x += random(-10,10); 
+      this.z += random(-10, 10); 
+      flip = !flip; 
+    }
+
+    // //go to itp:
+    // line(this.x, this.y, this.z, itp_point.x, this.new_y, itp_point.z);
+
+    // //go home:
+    // line(itp_point.x, this.new_y, itp_point.z, this.ny_x, this.new_y - inc, this.ny_z);
   }
 }
 
