@@ -40,5 +40,5 @@ function draw() {
 }
 
 function make_text(){
-    text("ITP | IMA | LowRes")
+    text("ITP | IMA | LowRes", width/3+sub_margin, 
 }
