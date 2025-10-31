@@ -36,7 +36,7 @@ function draw() {
   make_cuboid(box_x, box_y, box_z, box_w, box_h, box_d);
 
   //make random points at base:
-  for (let i = 0; i < 1; i++) {
+  for (let i = 0; i < 400; i++) {
     let px = random(-box_w / 2, box_w / 2);
     let py = box_h / 2;
     let pz = random(random(-box_d / 2, box_d / 2));
@@ -49,7 +49,7 @@ function draw() {
 
   pop();
 
-//   noLoop(); // static composition
+  noLoop(); // static composition
 }
 
 function make_cuboid(x, y, z, w, h, d) {
@@ -63,7 +63,7 @@ function make_cuboid(x, y, z, w, h, d) {
 //   box(w, h, d);
 }
 
-let st_weight = 1;
+let st_weight = 0.5;
 let st_col = 255;
 
 const itp_point = {
@@ -87,7 +87,7 @@ class Person {
   }
   display() {
     strokeWeight(st_weight * st_weight);
-    stroke(st_col);
+    stroke(st_col, 25);
 
     point(this.x, this.y, this.z); //display people as is.
 
@@ -112,8 +112,8 @@ class Person {
         line(this.x, this.new_y, this.z, this.x, this.new_y - dwell, this.z);
       }
       this.y = this.new_y - dwell;
-        this.x += random(-rand_control, rand_control);
-        this.z += random(-rand_control, rand_control);
+        // this.x += random(-rand_control, rand_control);
+        // this.z += random(-rand_control, rand_control);
         this.y += random(-rand_control, rand_control);
       flip = !flip;
     }
