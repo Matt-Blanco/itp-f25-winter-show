@@ -14,10 +14,12 @@ let people = [];
 
 let x, y, z, box_x, box_y, box_z; //declare everything globally.
 
-let world; 
+let world_map;
+let ny_map;
 
-function preload(){
-  world = loadImage("World.svg"); 
+function preload() {
+  world_map = loadImage("World.svg");
+  ny_map = loadImage("NewYorkCity.svg");
 }
 
 function setup() {
@@ -58,20 +60,59 @@ function draw() {
   noLoop(); // static composition
 }
 
+// function make_cuboid(x, y, z, w, h, d) {
+//   noFill();
+//   strokeWeight(0.2);
+//   translate(x, y, z);
+//   rotateY(42);
+//   noFill();
+//   stroke(255);
+
+//   box(w, h, d);
+// }
+
+//cody's:
 function make_cuboid(x, y, z, w, h, d) {
-  noFill();
-  strokeWeight(0.2);
+  // push();
   translate(x, y, z);
   rotateY(42);
+
   noFill();
   stroke(255);
+  strokeWeight(0.2);
 
-  // box(w, h, d);
+  // Draw the box edges (wireframe)
+  push();
+  noFill();
+  box(w, h, d);
+  pop();
+
+  // Draw the bottom face with a map of New York City texture
+  push();
+  translate(0, h / 2, 0); // Move to bottom face position
+  rotateX(-HALF_PI); // Rotate to make it horizontal and face the viewer
+  scale(-1, 1); // Flip horizontally
+  texture(world_map);
+  noStroke();
+  plane(w, d); // Draw textured plane
+  pop();
+
+  // Draw the bottom face with a map of New York City texture
+  push();
+  translate(0, h / 3, 0); // Move to bottom face position
+  rotateX(-HALF_PI); // Rotate to make it horizontal and face the viewer
+  scale(-1, 1); // Flip horizontally
+  texture(ny_map);
+  noStroke();
+  plane(w, d); // Draw textured plane
+  pop();
+
+  // pop();
 }
 
 let st_weight = 1;
 let st_col = 255;
-let st_alp = 25; 
+let st_alp = 25;
 
 const itp_point = {
   x: box_x + 50,
@@ -119,9 +160,9 @@ class Person {
         line(this.x, this.new_y, this.z, this.x, this.new_y - dwell, this.z);
       }
       this.y = this.new_y - dwell;
-        // this.x += random(-rand_control, rand_control);
-        // this.z += random(-rand_control, rand_control);
-        this.y += random(-rand_control, rand_control);
+      // this.x += random(-rand_control, rand_control);
+      // this.z += random(-rand_control, rand_control);
+      this.y += random(-rand_control, rand_control);
       flip = !flip;
     }
   }
