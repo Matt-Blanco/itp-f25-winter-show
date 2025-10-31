@@ -44,7 +44,7 @@ function draw() {
   make_cuboid(box_x, box_y, box_z, box_w, box_h, box_d);
 
   //make random points at base:
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 3; i++) {
     let px = random(-box_w / 2, box_w / 2);
     let py = box_h / 2;
     let pz = random(random(-box_d / 2, box_d / 2));
@@ -99,7 +99,7 @@ function make_cuboid(x, y, z, w, h, d) {
 
   // Draw the bottom face with a map of New York City texture
   push();
-  translate(0, h / 2.5, 0); // Move to bottom face position
+  translate(0, h / 2.4, 0); // Move to bottom face position
   rotateX(-HALF_PI); // Rotate to make it horizontal and face the viewer
   scale(-1, 1); // Flip horizontally
   texture(ny_map);
@@ -110,7 +110,7 @@ function make_cuboid(x, y, z, w, h, d) {
   // pop();
 }
 
-let st_weight = 0.09;
+let st_weight = 1;
 let st_col = 255;
 let st_alp = 255;
 
