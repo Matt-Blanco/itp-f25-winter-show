@@ -14,6 +14,12 @@ let people = [];
 
 let x, y, z, box_x, box_y, box_z; //declare everything globally.
 
+let world; 
+
+function preload(){
+  world = loadImage("World.svg"); 
+}
+
 function setup() {
   createCanvas(cw, ch, WEBGL);
   background(bg_col);
