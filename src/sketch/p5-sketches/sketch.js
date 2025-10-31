@@ -31,7 +31,12 @@ let st_cols = [
   "#009D9A", // Teal 50
   "#012749", // Cyan 90
   "#8A3800", // Orange 70
-]; ; 
+];
+
+// Additional variables
+let reps = 98 * 24; // Number of iterations for the flip motion
+let dwell = 16; // Small vertical movement for the "dwell"
+let rand_control = 3; // Random offset to give some natural variation
 
 function preload() {
   world_map = loadImage("frame.jpeg");
@@ -76,20 +81,7 @@ function draw() {
   noLoop(); // static composition
 }
 
-// function make_cuboid(x, y, z, w, h, d) {
-//   noFill();
-//   strokeWeight(0.2);
-//   translate(x, y, z);
-//   rotateY(42);
-//   noFill();
-//   stroke(255);
-
-//   box(w, h, d);
-// }
-
-//cody's:
 function make_cuboid(x, y, z, w, h, d) {
-  // push();
   translate(x, y, z);
   rotateY(42);
 
@@ -118,16 +110,14 @@ function make_cuboid(x, y, z, w, h, d) {
   translate(0, h / 2.4, 0); // Move to bottom face position
   rotateX(-HALF_PI); // Rotate to make it horizontal and face the viewer
   scale(-1, 1); // Flip horizontally
-  texture(ny_map);
+  // texture(ny_map);
   noStroke();
   plane(w, d); // Draw textured plane
   pop();
-
-  // pop();
 }
 
-let st_weight = 0.03;
-let st_alp = 5;
+let st_weight = 0.04;
+let st_alp = 0.5;
 
 const itp_point = {
   x: box_x + 50,
@@ -147,21 +137,18 @@ class Person {
     // About 2 inches = ~67 px for 1000px height canvas
     this.ny_y = y - 67;
 
-    this.col = color(random(st_cols)); 
+    this.col = color(random(st_cols)); // Random color from the palette
   }
 
   display() {
-    const rand_control = 3;
-    const reps = 98;
-    const dwell = 8;
     const inc = box_h / (reps * (reps * dwell));
     let flip = false;
 
-    stroke(this.col, st_alp);
+    stroke(this.col, st_alp); // Set the stroke color only once
     strokeWeight(st_weight);
 
     // 1️⃣ from world map → NY map (straight line)
-    line(this.x, this.home_y, this.z, this.x, this.ny_y, this.z);
+    line(this.x, this.home_y, this.z, itp_point.x, this.ny_y, itp_point.z);
 
     // starting Y for the flip motion
     let current_y = this.ny_y;
@@ -187,8 +174,6 @@ class Person {
     }
   }
 }
-
-
 
 function make_text() {
   fill(255);
