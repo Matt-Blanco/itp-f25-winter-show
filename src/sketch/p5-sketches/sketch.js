@@ -17,6 +17,22 @@ let x, y, z, box_x, box_y, box_z; //declare everything globally.
 let world_map;
 let ny_map;
 
+let st_cols = [
+  "#6929C4", // Purple 70
+  "#1192E8", // Cyan 50
+  "#005D5D", // Teal 70
+  "#9F1853", // Magenta 70
+  "#FA4D56", // Red 50
+  "#570408", // Red 90
+  "#198038", // Green 60
+  "#002D9C", // Blue 80
+  "#EE538B", // Magenta 50
+  "#B28600", // Yellow 50
+  "#009D9A", // Teal 50
+  "#012749", // Cyan 90
+  "#8A3800", // Orange 70
+]; ; 
+
 function preload() {
   world_map = loadImage("frame.jpeg");
   ny_map = loadImage("ny_transp.png");
@@ -28,7 +44,7 @@ function setup() {
 }
 
 function draw() {
-  background(bg_col);
+  // background(bg_col);
 
   push();
   //cube:
@@ -44,7 +60,7 @@ function draw() {
   make_cuboid(box_x, box_y, box_z, box_w, box_h, box_d);
 
   //make random points at base:
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 400; i++) {
     let px = random(-box_w / 2, box_w / 2);
     let py = box_h / 2;
     let pz = random(random(-box_d / 2, box_d / 2));
@@ -110,9 +126,8 @@ function make_cuboid(x, y, z, w, h, d) {
   // pop();
 }
 
-let st_weight = 1;
-let st_col = 255;
-let st_alp = 255;
+let st_weight = 0.03;
+let st_alp = 5;
 
 const itp_point = {
   x: box_x + 50,
@@ -131,6 +146,8 @@ class Person {
 
     // About 2 inches = ~67 px for 1000px height canvas
     this.ny_y = y - 67;
+
+    this.col = color(random(st_cols)); 
   }
 
   display() {
@@ -140,7 +157,7 @@ class Person {
     const inc = box_h / (reps * (reps * dwell));
     let flip = false;
 
-    stroke(st_col, st_alp);
+    stroke(this.col, st_alp);
     strokeWeight(st_weight);
 
     // 1️⃣ from world map → NY map (straight line)
