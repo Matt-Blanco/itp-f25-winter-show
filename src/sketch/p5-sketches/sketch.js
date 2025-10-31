@@ -60,11 +60,12 @@ function make_cuboid(x, y, z, w, h, d) {
   noFill();
   stroke(255);
 
-//   box(w, h, d);
+  // box(w, h, d);
 }
 
-let st_weight = 0.5;
+let st_weight = 1;
 let st_col = 255;
+let st_alp = 25; 
 
 const itp_point = {
   x: box_x + 50,
@@ -87,7 +88,7 @@ class Person {
   }
   display() {
     strokeWeight(st_weight * st_weight);
-    stroke(st_col, 25);
+    stroke(st_col, st_alp);
 
     point(this.x, this.y, this.z); //display people as is.
 
