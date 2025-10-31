@@ -34,7 +34,7 @@ let st_cols = [
 ];
 
 // Additional variables
-let reps = 98 * 24; // Number of iterations for the flip motion
+let reps = 98; // Number of iterations for the flip motion
 let dwell = 16; // Small vertical movement for the "dwell"
 let rand_control = 3; // Random offset to give some natural variation
 
@@ -110,14 +110,14 @@ function make_cuboid(x, y, z, w, h, d) {
   translate(0, h / 2.4, 0); // Move to bottom face position
   rotateX(-HALF_PI); // Rotate to make it horizontal and face the viewer
   scale(-1, 1); // Flip horizontally
-  // texture(ny_map);
+  texture(ny_map);
   noStroke();
   plane(w, d); // Draw textured plane
   pop();
 }
 
-let st_weight = 0.04;
-let st_alp = 0.5;
+let st_weight = 2;
+let st_alp = 100;
 
 const itp_point = {
   x: box_x + 50,
@@ -145,6 +145,7 @@ class Person {
     let flip = false;
 
     stroke(this.col, st_alp); // Set the stroke color only once
+    this.col.setAlpha(st_alp); 
     strokeWeight(st_weight);
 
     // 1️⃣ from world map → NY map (straight line)
