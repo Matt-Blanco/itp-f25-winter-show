@@ -18,7 +18,7 @@ let world_map;
 let ny_map;
 
 function preload() {
-  world_map = loadImage("World.svg");
+  world_map = loadImage("frame.jpeg");
   ny_map = loadImage("NewYorkCity.svg");
 }
 
@@ -110,9 +110,9 @@ function make_cuboid(x, y, z, w, h, d) {
   // pop();
 }
 
-let st_weight = 1;
+let st_weight = 0.03;
 let st_col = 255;
-let st_alp = 25;
+let st_alp = 255;
 
 const itp_point = {
   x: box_x + 50,
@@ -142,6 +142,7 @@ class Person {
     const reps = 98; //number of times the program runs.
     const dwell = 8;
     let inc = box_h / (reps * (reps * dwell));
+    console.log(inc); 
 
     const rand_control = 3;
 
