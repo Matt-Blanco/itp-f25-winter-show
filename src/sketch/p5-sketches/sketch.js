@@ -19,7 +19,7 @@ let ny_map;
 
 function preload() {
   world_map = loadImage("frame.jpeg");
-  ny_map = loadImage("NewYorkCity.svg");
+  ny_map = loadImage("ny_transp.png");
 }
 
 function setup() {
@@ -44,7 +44,7 @@ function draw() {
   make_cuboid(box_x, box_y, box_z, box_w, box_h, box_d);
 
   //make random points at base:
-  for (let i = 0; i < 400; i++) {
+  for (let i = 0; i < 100; i++) {
     let px = random(-box_w / 2, box_w / 2);
     let py = box_h / 2;
     let pz = random(random(-box_d / 2, box_d / 2));
@@ -84,7 +84,7 @@ function make_cuboid(x, y, z, w, h, d) {
   // Draw the box edges (wireframe)
   push();
   noFill();
-  box(w, h, d);
+  // box(w, h, d);
   pop();
 
   // Draw the bottom face with a map of New York City texture
@@ -99,7 +99,7 @@ function make_cuboid(x, y, z, w, h, d) {
 
   // Draw the bottom face with a map of New York City texture
   push();
-  translate(0, h / 3, 0); // Move to bottom face position
+  translate(0, h / 2.5, 0); // Move to bottom face position
   rotateX(-HALF_PI); // Rotate to make it horizontal and face the viewer
   scale(-1, 1); // Flip horizontally
   texture(ny_map);
@@ -110,7 +110,7 @@ function make_cuboid(x, y, z, w, h, d) {
   // pop();
 }
 
-let st_weight = 0.03;
+let st_weight = 0.09;
 let st_col = 255;
 let st_alp = 255;
 
@@ -129,45 +129,49 @@ class Person {
     this.home_y = y;
     this.home_z = z;
 
-    this.ny_x = random(-box_w / 2, box_w / 2);
-    this.ny_y = y;
-    this.ny_z = random(-box_d / 2, box_d / 2);
+    // About 2 inches = ~67 px for 1000px height canvas
+    this.ny_y = y - 67;
   }
+
   display() {
-    strokeWeight(st_weight * st_weight);
-    stroke(st_col, st_alp);
-
-    point(this.x, this.y, this.z); //display people as is.
-
-    const reps = 98; //number of times the program runs.
-    const dwell = 8;
-    let inc = box_h / (reps * (reps * dwell));
-    console.log(inc); 
-
     const rand_control = 3;
+    const reps = 98;
+    const dwell = 8;
+    const inc = box_h / (reps * (reps * dwell));
+    let flip = false;
 
+    stroke(st_col, st_alp);
     strokeWeight(st_weight);
 
-    line(this.x, this.y, this.z, itp_point.x, this.y - inc, itp_point.z);
+    // 1️⃣ from world map → NY map (straight line)
+    line(this.x, this.home_y, this.z, this.x, this.ny_y, this.z);
 
-    let flip = false;
+    // starting Y for the flip motion
+    let current_y = this.ny_y;
+
+    // 2️⃣ upward flip motion
     for (let i = 0; i < reps; i++) {
-      this.new_y = this.y - inc;
+      let new_y = current_y - inc;
+      if (new_y <= -box_h / 2) break; // stop at top of cuboid
+
       if (flip) {
-        line(this.x, this.y, this.z, itp_point.x, this.new_y, itp_point.z);
-        line(itp_point.x, this.new_y, itp_point.z, itp_point.x, this.new_y - dwell, itp_point.z);
+        // go toward itp_point
+        line(this.x, current_y, this.z, itp_point.x, new_y, itp_point.z);
+        // short dwell line upward
+        line(itp_point.x, new_y, itp_point.z, itp_point.x, new_y - dwell, itp_point.z);
       } else {
-        line(itp_point.x, this.y, itp_point.z, this.x, this.new_y, this.z);
-        line(this.x, this.new_y, this.z, this.x, this.new_y - dwell, this.z);
+        // go back to own column
+        line(itp_point.x, current_y, itp_point.z, this.x, new_y, this.z);
+        line(this.x, new_y, this.z, this.x, new_y - dwell, this.z);
       }
-      this.y = this.new_y - dwell;
-      // this.x += random(-rand_control, rand_control);
-      // this.z += random(-rand_control, rand_control);
-      this.y += random(-rand_control, rand_control);
+
+      current_y = new_y - dwell + random(-rand_control, rand_control);
       flip = !flip;
     }
   }
 }
+
+
 
 function make_text() {
   fill(255);

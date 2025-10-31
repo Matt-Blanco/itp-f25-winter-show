@@ -5,16 +5,16 @@ let bg_col = 0;
 let col = 255; 
 
 function preload() {
-  img = loadImage("./World.jpg");
+  img = loadImage("./NewYorkCity.jpg");
 }
 
 function setup() {
   createCanvas(img.width, img.height);
-  background(bg_col);
+//   background(bg_col);
 }
 
 function draw() {
-  background(bg_col); // clear canvas
+//   background(bg_col); // clear canvas
   convert_to_pixels();
   noLoop(); 
 }
@@ -41,5 +41,5 @@ function convert_to_pixels() {
 }
 
 function mousePressed(){
-    save ('frame.jpeg'); 
+    save ('frame.png'); 
 }
