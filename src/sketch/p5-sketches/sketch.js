@@ -34,7 +34,7 @@ let st_cols = [
 ];
 
 // Additional variables
-let reps = 98; // Number of iterations for the flip motion
+let reps = 98*12; // Number of iterations for the flip motion
 let dwell = 16; // Small vertical movement for the "dwell"
 let rand_control = 3; // Random offset to give some natural variation
 
@@ -116,7 +116,7 @@ function make_cuboid(x, y, z, w, h, d) {
   pop();
 }
 
-let st_weight = 2;
+let st_weight = 0.6;
 let st_alp = 100;
 
 const itp_point = {
@@ -179,4 +179,8 @@ class Person {
 function make_text() {
   fill(255);
   text("ITP | IMA | LowRes", width / 3 + sub_margin, sub_margin);
+}
+
+function mousePressed(){
+  save ("frame.jpeg"); 
 }
